@@ -1,36 +1,43 @@
-import { useSelector,useDispatch } from 'react-redux';
-import classes from './Counter.module.css';
+import { useSelector, useDispatch } from "react-redux";
+import classes from "./Counter.module.css";
+import { counterActions } from "../store/index";
 
 const Counter = () => {
-  const Counter=useSelector(state=>state.counter)
-const dispatch=useDispatch()
-  const incrementHandler=()=>{
-   dispatch ({type:"increment"})
-  }
+  
+  const counters = useSelector((state) => state.counter);
+  const show = useSelector((state) => state.showtoggle);
+  const dispatch = useDispatch();
+  const incrementHandler = () => {
+    dispatch(counterActions.increment());
+  };
 
-  const decrementHandler=()=>{
-    dispatch({type:"decrement"})
-  }
-  const incrementHandlerbyfive=()=>{
-    dispatch ({type:"incrementbyFive"})
-   }
- 
-   const decrementHandlerbyfive=()=>{
-     dispatch({type:"decrementbyFive"})
-   }
-  const toggleCounterHandler = () => {};
+  const decrementHandler = () => {
+    dispatch(counterActions.decrement());
+  };
+  const incrementHandlerbyfive = () => {
+    dispatch(counterActions.increase(5));
+  };
+
+  // const decrementHandlerbyfive = () => {
+  //   dispatch({ type: "decrement" });
+  // };
+  const toggleCounterHandler = () => {
+    dispatch(counterActions.toggleCounter());
+  };
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>-- COUNTER VALUE --{Counter}</div>
+      {show && (
+        <div className={classes.value}>{counters}</div>
+      )}
       <div>
         <button onClick={incrementHandler}>Increment</button>
         <button onClick={decrementHandler}>Decrement</button>
       </div>
       <div>
         <button onClick={incrementHandlerbyfive}>Increment by 5</button>
-        <button onClick={decrementHandlerbyfive}>Decrement by 5</button>
+        {/* <button onClick={decrementHandlerbyfive}>Decrement by 5</button> */}
       </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
     </main>
